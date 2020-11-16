@@ -83,7 +83,8 @@ async function main() {
 
     // Getting all employees with their role info to show user
     const showEmployees = await db.query(
-        'SELECT employees.first_name, employees.last_name, roles.title, roles.salary FROM employees, roles WHERE employees.role_id = roles.id ORDER BY roles.title'
+        // 'SELECT employees.first_name, employees.last_name, roles.title, roles.salary FROM employees, roles WHERE employees.role_id = roles.id ORDER BY roles.title'
+        'SELECT * FROM employees'
         )
     console.table(showEmployees)
     }
@@ -158,10 +159,10 @@ async function main() {
 
         // Getting correct role id and manager id from database
         const roleId = await db.query('SELECT id FROM roles WHERE title = ?', [promptAnswers.role])
-        
+        console.log(roleId)
         // Inserting new employee into database
         await db.query( 
-            'INSERT INTO employees (first_name, last_name, role_id) VALUES (?,?,?)', [promptAnswers.firstName, promptAnswers.lastName, roleId[0].role_id]
+            'INSERT INTO employees (first_name, last_name, role_id) VALUES (?,?,?)', [promptAnswers.firstName, promptAnswers.lastName, roleId[0].id]
         )
         
         // Feedback to user
